@@ -8,30 +8,50 @@ public class ActionDemoTest {
         System.setProperty("webdriver.gecko.driver", "/Users/gauthier/Documents/Development/Selenium/drivers/geckodriver");
         FirefoxDriver driver = new FirefoxDriver();
 //        visit Wikipedia homepage
-        driver.get("https://en.wikipedia.org/wiki/Main_Page");
 
-//        //*[@id="p-logo"]/a
 
-        // locate and click on the random article link
-        driver.findElement(By.cssSelector("#n-randompage")).click();
+//          Happy path login succeeds
+//        Locate elements
+        driver.get("http://localhost:8000/index.html");
+        WebElement username = driver.findElement(By.cssSelector("#username"));
+        WebElement password = driver.findElement(By.cssSelector("#password"));
+        WebElement submit = driver.findElement(By.name("submit"));
+
+//        Perform actions
+        username.sendKeys("registeredUser");
+        password.sendKeys("1234");
+        submit.click();
         Thread.sleep(5000);
 
-        // locate the title of article
-        System.out.println(driver.findElement(By.cssSelector(".firstHeading")).getText());
+//        Log result
+        String message = driver.findElement(By.cssSelector("#auth-message")).getText();
+        System.out.println(message);
 
-//        view page info
-        driver.findElementByLinkText("Page information").click();
+//        Sad path - login fails
+//        Locate elements
+        driver.get("http://localhost:8000/index.html");
+        WebElement username2 = driver.findElement(By.cssSelector("#username"));
+        WebElement password2 = driver.findElement(By.cssSelector("#password"));
+        WebElement submit2 = driver.findElement(By.name("submit"));
+
+//        Perform actions
+        username2.sendKeys("otherUser");
+        password2.sendKeys("qwerty1234");
+        submit2.click();
         Thread.sleep(5000);
 
-//        new search
-        driver.findElement(By.name("search")).sendKeys("selenium (software)" + Keys.RETURN);
+//        Log result
+        String message2 = driver.findElement(By.cssSelector("#auth-message")).getText();
+        System.out.println(message2);
+
+//        Perform create account actions
+        WebElement createAccountLink = driver.findElement(By.linkText("Create an account"));
+        createAccountLink.click();
         Thread.sleep(5000);
 
-//        Xpath logo click
-        String xpath = "//*[@id=\"p-logo\"]/a";
-        driver.findElement(By.xpath(xpath)).click();
-        Thread.sleep(5000);
-
+//        Log result
+        String header = driver.findElement(By.cssSelector("#header")).getText();
+        System.out.println(header);
 
         driver.quit();
     }
