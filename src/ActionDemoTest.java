@@ -10,12 +10,28 @@ public class ActionDemoTest {
 //        visit Wikipedia homepage
         driver.get("https://en.wikipedia.org/wiki/Main_Page");
 
+//        //*[@id="p-logo"]/a
+
         // locate and click on the random article link
         driver.findElement(By.cssSelector("#n-randompage")).click();
         Thread.sleep(5000);
 
         // locate the title of article
-        System.out.println(driver.findElement(By.cssSelector("#firstHeading")).getText());
+        System.out.println(driver.findElement(By.cssSelector(".firstHeading")).getText());
+
+//        view page info
+        driver.findElementByLinkText("Page information").click();
+        Thread.sleep(5000);
+
+//        new search
+        driver.findElement(By.name("search")).sendKeys("selenium (software)" + Keys.RETURN);
+        Thread.sleep(5000);
+
+//        Xpath logo click
+        String xpath = "//*[@id=\"p-logo\"]/a";
+        driver.findElement(By.xpath(xpath)).click();
+        Thread.sleep(5000);
+
 
         driver.quit();
     }
