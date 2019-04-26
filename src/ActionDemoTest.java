@@ -7,16 +7,15 @@ public class ActionDemoTest {
     public static void main(String [] args) throws InterruptedException {
         System.setProperty("webdriver.gecko.driver", "/Users/gauthier/Documents/Development/Selenium/drivers/geckodriver");
         FirefoxDriver driver = new FirefoxDriver();
-        driver.get("https://google.com");
+//        visit Wikipedia homepage
+        driver.get("https://en.wikipedia.org/wiki/Main_Page");
 
-        // locate the search box element
-        WebElement searchBox = driver.findElement(By.name("q"));
+        // locate and click on the random article link
+        driver.findElement(By.cssSelector("#n-randompage")).click();
         Thread.sleep(5000);
 
-        // type search query in search box
-        searchBox.sendKeys("seleniumhq" + Keys.RETURN);
-        Thread.sleep(5000);
-        System.out.println(driver.getTitle());
+        // locate the title of article
+        System.out.println(driver.findElement(By.cssSelector("#firstHeading")).getText());
 
         driver.quit();
     }
